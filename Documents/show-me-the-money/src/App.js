@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-dropdown';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 import logo from './logo.svg';
 import './App.css';
 
@@ -23,9 +21,12 @@ const SubmitForm = (
     buttonStyle
   }) => (
     <div>
-      {labelName}: <input type="text"  style={{ height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} />
-      {labelCategory}: <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} style={{ border: '1px solid black', height: '20px', marginRight: '5px' }}/>
-      {labelAmount} : <input type="text" style={{ height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} />
+      {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} />
+      {labelCategory}: 
+        <div style={{ display: 'inline-block', border: '1px solid black', marginRight: '5px', paddingLeft: '5px', paddingRight: '5px' }}>
+          <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} />
+        </div>
+      {labelAmount} : <input type="text" style={{ display: 'inline-block', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} />
       <span style={buttonStyle} onClick={handleFormSubmit}>Submit</span>
     </div> 
 )
