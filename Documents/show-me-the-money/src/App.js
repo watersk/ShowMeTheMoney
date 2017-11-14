@@ -17,7 +17,7 @@ const defaultOption = { value: '-Select-', label: '-Select-'};
 const SubmitForm = (
   { handleFormSubmit, formValueName, formValueCategory, formValueAmount, 
     handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, 
-    labelName, labelCategory, labelAmount, 
+    labelName, labelCategory, labelAmount, totalSpent,
     buttonStyle
   }) => (
     <div>
@@ -39,7 +39,7 @@ const Table = ({ values }) => (
         <div style={{ width: '300px', textAlign: 'left' }}>
           <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.name}</div>
           <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.category}</div>
-          <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.amount}</div>
+          <div style={{ width: '100px', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
         </div>
       </div>)
     })}
@@ -55,7 +55,8 @@ class App extends Component {
       formValueName: '',      // Name
       formValueCategory: '',  // Category
       formValueAmount: '',    // Amount
-      submittedValues: []     // All of the above, used to easily capture all values and pass to Table
+      submittedValues: [],    // All of the above, used to easily capture all values and pass to Table
+      totalSpent: 0           // running tally of all amounts
     };
 
     // Bindings
@@ -68,8 +69,21 @@ class App extends Component {
   // Handling functions
    handleFormSubmit(e) { // When Submit is clicked
     const newState = this.state.submittedValues; // Create a new state (empty array)
-    newState.push({ name: this.state.formValueName, category: this.state.formValueCategory, amount:this.state.formValueAmount }); // Push data entered by user into the new state array
-    this.setState({ submittedValues: newState, formValueName: '', formValueCategory: '', formValueAmount: '' }); // Reset submittedValues to be empty for next set of data
+    newState.push({ 
+      name: this.state.formValueName, 
+      category: this.state.formValueCategory, 
+      amount:this.state.formValueAmount, 
+      total:this.state.totalSpent
+    }); // Push data entered by user into the new state array
+    newState.total = this.state.totalSpent + newState.amount;
+    this.setState({ submittedValues: 
+      newState, 
+      formValueName: '', 
+      formValueCategory: '', 
+      formValueAmount: '', 
+      total: 0
+    }); // Reset submittedValues to be empty for next set of data
+    this.state.totalSpent = newState.total;
   }
 
   handleFormChangeName(e) { // When data is entered in Name field, save somewhere
@@ -89,6 +103,7 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{ fontSize: '75px', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
+        <br></br><br></br><br></br>
         <SubmitForm
           handleFormSubmit={this.handleFormSubmit}
           formValueName={this.state.formValueName}
@@ -102,12 +117,18 @@ class App extends Component {
           labelAmount="Amount ($)"
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
+        <br></br><br></br><br></br>
         <div style={{ width: '300px', textAlign: 'left' }}>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
-          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Amount</div>
+          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
         </div>
         <Table values={this.state.submittedValues} /> { /* Values submitted by User appear in this table. */ }
+        <br></br><br></br>
+        <div style={{ width: '300px', textAlign: 'left' }}>
+          <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
+          <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
+        </div>
       </div>
     );
   }
