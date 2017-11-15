@@ -144,17 +144,30 @@ class App extends Component {
         <div style={{ width: '250px', display: 'inline-block' }}>
             <PieChart slices={[
               {
+                name: 'Grocery',
                 color: '#00000',
-                value: 10,
+                value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100,
               },
               {
+                name: 'Venmo',
                 color: '#ff0000',
-                value: 35,
+                value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
               },
               {
+                name: 'Eat Out',
                 color: '#f0f',
-                value: 55,
+                value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
               },
+              {
+                name: 'Bills',
+                color: '#ff00f0',
+                value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100,
+              },
+              {
+                name: 'Entertainment',
+                color: '#00f0f0',
+                value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100,
+              }
             ]}
             />
           </div>
