@@ -64,6 +64,13 @@ class App extends Component {
         EatOut: 0,
         Bills: 0,
         Entertainment: 0
+      },
+      catTotals: {
+        Grocery: 0,
+        Venmo: 0,
+        EatOut: 0,
+        Bills: 0,
+        Entertainment: 0
       }
     };
 
@@ -93,6 +100,9 @@ class App extends Component {
     const newCatValues = this.state.catValues;
     newCatValues[this.state.formValueCategory] += 1; 
 
+    const newCatTotals = this.state.catTotals;
+    newCatTotals[this.state.formValueCategory] += this.state.formValueAmount;
+
     newState.push({ 
       name: this.state.formValueName, 
       category: this.state.formValueCategory, 
@@ -105,7 +115,8 @@ class App extends Component {
       formValueCategory: '', 
       formValueAmount: '', 
       totalSpent: newTotal,
-      catValues: newCatValues
+      catValues: newCatValues,
+      catTotals: newCatTotals
     }); // Reset submittedValues to be empty for next set of data
   }
 
@@ -182,6 +193,7 @@ class App extends Component {
             ]}
             />
           </div>
+          { /* parseDouble(Object.values(this.state.catTotals)) */ }
       </div>
     );
   }
