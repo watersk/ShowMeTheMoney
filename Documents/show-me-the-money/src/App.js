@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-dropdown';
+import PieChart from 'react-simple-pie-chart';
 import logo from './logo.svg';
 import './App.css';
 
@@ -69,19 +70,19 @@ class App extends Component {
   // Handling functions
    handleFormSubmit(e) { // When Submit is clicked
     const newState = this.state.submittedValues; // Create a new state (empty array)
+    const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
+    
     newState.push({ 
       name: this.state.formValueName, 
       category: this.state.formValueCategory, 
-      amount:this.state.formValueAmount, 
-      total:this.state.totalSpent
+      amount: this.state.formValueAmount
     }); // Push data entered by user into the new state array
-    newState.total = this.state.totalSpent + newState.amount;
     this.setState({ submittedValues: 
       newState, 
       formValueName: '', 
       formValueCategory: '', 
       formValueAmount: '', 
-      total: 0
+      totalSpent: newTotal
     }); // Reset submittedValues to be empty for next set of data
     this.state.totalSpent = newState.total;
   }
@@ -103,7 +104,7 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{ fontSize: '75px', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
-        <br></br><br></br><br></br>
+        <br /><br /><br />
         <SubmitForm
           handleFormSubmit={this.handleFormSubmit}
           formValueName={this.state.formValueName}
@@ -117,18 +118,35 @@ class App extends Component {
           labelAmount="Amount ($)"
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
-        <br></br><br></br><br></br>
+        <br /><br /><br />
         <div style={{ width: '300px', textAlign: 'left' }}>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
         </div>
         <Table values={this.state.submittedValues} /> { /* Values submitted by User appear in this table. */ }
-        <br></br><br></br>
+        <br /><br />
         <div style={{ width: '300px', textAlign: 'left' }}>
           <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
           <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
         </div>
+        <div style={{ width: '250px', display: 'inline-block' }}>
+            <PieChart slices={[
+              {
+                color: '#00000',
+                value: 10,
+              },
+              {
+                color: '#ff0000',
+                value: 35,
+              },
+              {
+                color: '#f0f',
+                value: 55,
+              },
+            ]}
+            />
+          </div>
       </div>
     );
   }
