@@ -57,7 +57,14 @@ class App extends Component {
       formValueCategory: '',  // Category
       formValueAmount: '',    // Amount
       submittedValues: [],    // All of the above, used to easily capture all values and pass to Table
-      totalSpent: 0           // running tally of all amounts
+      totalSpent: 0,          // running tally of all amounts
+      catValues: {
+        Grocery: 0,             // counts of all category types (initialized to zero)
+        Venmo: 0,
+        EatOut: 0,
+        Bills: 0,
+        Entertainment: 0
+      }
     };
 
     // Bindings
@@ -71,6 +78,9 @@ class App extends Component {
    handleFormSubmit(e) { // When Submit is clicked
     const newState = this.state.submittedValues; // Create a new state (empty array)
     const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
+    
+    const newCatValues = this.state.catValues;
+    newCatValues[this.state.formValueCategory] += 1; 
 
     newState.push({ 
       name: this.state.formValueName, 
@@ -78,15 +88,14 @@ class App extends Component {
       amount: this.state.formValueAmount
     }); // Push data entered by user into the new state array
     
-    this.setState({ submittedValues: 
-      newState, 
+    this.setState({ 
+      submittedValues: newState, 
       formValueName: '', 
       formValueCategory: '', 
       formValueAmount: '', 
-      totalSpent: newTotal
+      totalSpent: newTotal,
+      catValues: newCatValues
     }); // Reset submittedValues to be empty for next set of data
-    
-    this.state.totalSpent = newState.total;
   }
 
   handleFormChangeName(e) { // When data is entered in Name field, save somewhere
@@ -95,7 +104,7 @@ class App extends Component {
 
   handleFormChangeCategoryDDL(valueObj) { // When data is entered in Category field, save somewhere
     this.setState({ formValueCategory: valueObj.value });
-    //console.log(e)
+
   }
 
   handleFormChangeAmount(e) { // When data is entered in Amount field save somewhere
