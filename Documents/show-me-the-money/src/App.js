@@ -82,7 +82,7 @@ class App extends Component {
       window.alert("Please enter all required fields marked with an '*'.");
       return false;
     }
-    else if(!(parseFloat(this.state.formValueAmount, 10))) {
+    else if(!(parseFloat(this.state.formValueAmount))) {
       window.alert("Amount must be a number.");
       return false;
     }
