@@ -71,12 +71,13 @@ class App extends Component {
    handleFormSubmit(e) { // When Submit is clicked
     const newState = this.state.submittedValues; // Create a new state (empty array)
     const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
-    
+
     newState.push({ 
       name: this.state.formValueName, 
       category: this.state.formValueCategory, 
       amount: this.state.formValueAmount
     }); // Push data entered by user into the new state array
+    
     this.setState({ submittedValues: 
       newState, 
       formValueName: '', 
@@ -84,6 +85,7 @@ class App extends Component {
       formValueAmount: '', 
       totalSpent: newTotal
     }); // Reset submittedValues to be empty for next set of data
+    
     this.state.totalSpent = newState.total;
   }
 
