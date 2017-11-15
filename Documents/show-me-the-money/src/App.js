@@ -7,7 +7,7 @@ import './App.css';
 const ddlOptions = [
   { value: 'Grocery', label: 'Grocery' },
   { value: 'Venmo', label: 'Venmo' },
-  { value: 'Eat Out', label: 'Eat Out' },
+  { value: 'EatOut', label: 'Eat Out' },
   { value: 'Bills', label: 'Bills' },
   { value: 'Entertainment', label: 'Entertainment' }
 ]
@@ -76,6 +76,17 @@ class App extends Component {
 
   // Handling functions
    handleFormSubmit(e) { // When Submit is clicked
+    if(!(this.state.formValueName) ||
+        !(this.state.formValueCategory) ||
+        !(this.state.formValueAmount)) {
+      window.alert("Please enter all required fields marked with an '*'.");
+      return false;
+    }
+    else if(!(parseFloat(this.state.formValueAmount, 10))) {
+      window.alert("Amount must be a number.");
+      return false;
+    }
+    
     const newState = this.state.submittedValues; // Create a new state (empty array)
     const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
     
@@ -124,14 +135,14 @@ class App extends Component {
           handleFormChangeName={this.handleFormChangeName}
           handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
           handleFormChangeAmount={this.handleFormChangeAmount}
-          labelName="Name"
-          labelCategory="Category"
-          labelAmount="Amount ($)"
+          labelName="Name *"
+          labelCategory="Category *"
+          labelAmount="Amount ($) *"
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
         <br /><br /><br />
         <div style={{ width: '300px', textAlign: 'left' }}>
-          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
+          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name*</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
         </div>
@@ -154,8 +165,8 @@ class App extends Component {
                 value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
               },
               {
-                name: 'Eat Out',
-                color: '#f0f',
+                name: 'EatOut',
+                color: '#f0f000',
                 value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
               },
               {
