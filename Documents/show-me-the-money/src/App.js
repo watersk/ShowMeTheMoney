@@ -192,8 +192,36 @@ class App extends Component {
               }
             ]}
             />
+            <PieChart slices={[
+              {
+                name: 'Grocery',
+                color: '#00000',
+                value: ( Object.values(this.state.catTotals)[0]/(this.state.totalSpent) )*100,
+              },
+              {
+                name: 'Venmo',
+                color: '#ff0000',
+                value: ( Object.values(this.state.catTotals)[1]/(this.state.totalSpent) )*100,
+              },
+              {
+                name: 'EatOut',
+                color: '#f0f000',
+                value: ( Object.values(this.state.catTotals)[2]/(this.state.totalSpent) )*100,
+              },
+              {
+                name: 'Bills',
+                color: '#ff00f0',
+                value: ( Object.values(this.state.catTotals)[3]/(this.state.totalSpent) )*100,
+              },
+              {
+                name: 'Entertainment',
+                color: '#00f0f0',
+                value: ( Object.values(this.state.catTotals)[4]/(this.state.totalSpent) )*100,
+              }
+            ]}
+            />
           </div>
-          { /* parseDouble(Object.values(this.state.catTotals)) */ }
+          { Object.values(this.state.catTotals) }
       </div>
     );
   }
