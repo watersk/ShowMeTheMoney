@@ -4,6 +4,7 @@ import PieChart from 'react-simple-pie-chart';
 import logo from './logo.svg';
 import './App.css';
 
+// options for Category DDL (and their values)
 const ddlOptions = [
   { value: 'Grocery', label: 'Grocery' },
   { value: 'Venmo', label: 'Venmo' },
@@ -12,6 +13,7 @@ const ddlOptions = [
   { value: 'Entertainment', label: 'Entertainment' }
 ]
 
+// default option to populate in Category DDL (can't be an actual selection)
 const defaultOption = { value: '-Select-', label: '-Select-'};
 
 // Fields to capture User input (including Submit button)
@@ -83,7 +85,7 @@ class App extends Component {
 
   // Handling functions
   
-   handleFormSubmit(e) { // When Submit is clicked
+  handleFormSubmit(e) { // When Submit is clicked
     if(!(this.state.formValueName) ||
         !(this.state.formValueCategory) ||
         !(this.state.formValueAmount)) {
@@ -95,14 +97,14 @@ class App extends Component {
       return false;
     }
 
-    const newState = this.state.submittedValues; // Create a new state (empty array)
-    const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
+    const newState = this.state.submittedValues; // create a new state (to change values without affecting the original state accidentally)
+    const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount); // update total
     
-    const newCatValues = this.state.catValues;
-    newCatValues[this.state.formValueCategory] += 1; 
+    const newCatValues = this.state.catValues; // new object of category values (to record number of categories)
+    newCatValues[this.state.formValueCategory] += 1; // increment the specified category as needed
 
-    const newCatTotals = this.state.catTotals;
-    newCatTotals[this.state.formValueCategory] += parseFloat(this.state.formValueAmount);
+    const newCatTotals = this.state.catTotals; // new object of category totals (to record totals spent in a given category)
+    newCatTotals[this.state.formValueCategory] += parseFloat(this.state.formValueAmount); // update given category with new amount
 
     newState.push({ 
       name: this.state.formValueName, 
@@ -164,7 +166,7 @@ class App extends Component {
           <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
           <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
         </div>
-        <div style={{ width: '250px', display: 'inline-block' }}>
+        <div style={{ width: '250px', display: 'inline-block' }}> {/* Pie Chart for the number of times various categories appear in the table */ }
             <PieChart slices={[
               {
                 name: 'Grocery',
@@ -193,6 +195,7 @@ class App extends Component {
               }
             ]}
             />
+            {/* Pie Chart for amounts spent in each category */}
             <PieChart slices={[
               {
                 name: 'Grocery',
