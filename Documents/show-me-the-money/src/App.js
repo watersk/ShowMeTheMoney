@@ -82,6 +82,7 @@ class App extends Component {
   }
 
   // Handling functions
+  
    handleFormSubmit(e) { // When Submit is clicked
     if(!(this.state.formValueName) ||
         !(this.state.formValueCategory) ||
@@ -93,7 +94,7 @@ class App extends Component {
       window.alert("Amount must be a number.");
       return false;
     }
-    
+
     const newState = this.state.submittedValues; // Create a new state (empty array)
     const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount);
     
@@ -101,7 +102,7 @@ class App extends Component {
     newCatValues[this.state.formValueCategory] += 1; 
 
     const newCatTotals = this.state.catTotals;
-    newCatTotals[this.state.formValueCategory] += this.state.formValueAmount;
+    newCatTotals[this.state.formValueCategory] += parseFloat(this.state.formValueAmount);
 
     newState.push({ 
       name: this.state.formValueName, 
@@ -221,7 +222,11 @@ class App extends Component {
             ]}
             />
           </div>
-          { Object.values(this.state.catTotals) }
+          { /*<div> Grocery: { Object.values(this.state.catTotals)[0] } </div>
+          <div> Venmo: { Object.values(this.state.catTotals)[1] } </div>
+          <div> Eat Out: { Object.values(this.state.catTotals)[2] } </div>
+          <div> Bills: { Object.values(this.state.catTotals)[3] } </div>
+          <div> Entertainment: { Object.values(this.state.catTotals)[4] } </div> */ }
       </div>
     );
   }
