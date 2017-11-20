@@ -98,6 +98,9 @@ class App extends Component {
     }
 
     const newState = this.state.submittedValues; // create a new state (to change values without affecting the original state accidentally)
+    if (this.state.formValueAmount.indexOf('.') === -1) {
+      this.state.formValueAmount += '.00';
+    }
     const newTotal = this.state.totalSpent + parseFloat(this.state.formValueAmount); // update total
     
     const newCatValues = this.state.catValues; // new object of category values (to record number of categories)
