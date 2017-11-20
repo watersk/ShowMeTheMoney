@@ -154,47 +154,48 @@ class App extends Component {
           labelAmount="Amount ($) *"
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
-        <br /><br /><br />
-        <div style={{ width: '300px', textAlign: 'left' }}>
+        <br /><br /><br /> 
+        <div style={{ width: '100%', textAlign: 'left' }}>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name*</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
+          <div style={{ width: '300px' }}><Table values={this.state.submittedValues} /></div> { /* Values submitted by User appear in this table. */ }
+          <br />
+          <div style={{ width: '300px', textAlign: 'left' }}>
+            <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
+            <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
         </div>
-        <Table values={this.state.submittedValues} /> { /* Values submitted by User appear in this table. */ }
-        <br /><br />
-        <div style={{ width: '300px', textAlign: 'left' }}>
-          <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
-          <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
-        </div>
-        <div style={{ width: '250px', display: 'inline-block' }}> {/* Pie Chart for the number of times various categories appear in the table */ }
+          <div style={{ width: '300px', display: 'inline-block' }}>
             <PieChart slices={[
-              {
-                name: 'Grocery',
-                color: '#00000',
-                value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Venmo',
-                color: '#ff0000',
-                value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'EatOut',
-                color: '#f0f000',
-                value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Bills',
-                color: '#ff00f0',
-                value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Entertainment',
-                color: '#00f0f0',
-                value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100,
-              }
-            ]}
+                {
+                  name: 'Grocery',
+                  color: '#00000',
+                  value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100,
+                },
+                {
+                  name: 'Venmo',
+                  color: '#ff0000',
+                  value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
+                },
+                {
+                  name: 'EatOut',
+                  color: '#f0f000',
+                  value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
+                },
+                {
+                  name: 'Bills',
+                  color: '#ff00f0',
+                  value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100,
+                },
+                {
+                  name: 'Entertainment',
+                  color: '#00f0f0',
+                  value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100,
+                }
+              ]}
             />
+          </div>
+          <div style={{ width: '300px', display: 'inline-block' }}>
             {/* Pie Chart for amounts spent in each category */}
             <PieChart slices={[
               {
@@ -225,12 +226,14 @@ class App extends Component {
             ]}
             />
           </div>
+        </div>
+        <br /><br />
           { /*<div> Grocery: { Object.values(this.state.catTotals)[0] } </div>
           <div> Venmo: { Object.values(this.state.catTotals)[1] } </div>
           <div> Eat Out: { Object.values(this.state.catTotals)[2] } </div>
           <div> Bills: { Object.values(this.state.catTotals)[3] } </div>
           <div> Entertainment: { Object.values(this.state.catTotals)[4] } </div> */ }
-      </div>
+        </div>
     );
   }
 }
