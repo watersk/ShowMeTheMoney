@@ -36,7 +36,7 @@ const SubmitForm = (
 
 // Table component maps values entered into a table to show records
 const Table = ({ values }) => (
-  <div>
+  <div style={{ display:'inline-block' }}>
     {values.map(function(currentValue, index) {
       return(<div style={{ align: "left", marginRight:'5px'}} key={index}>
         <div style={{ width: '300px', textAlign: 'left' }}>
@@ -162,14 +162,16 @@ class App extends Component {
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name*</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
-          <div style={{ width: '300px' }}><Table values={this.state.submittedValues} /></div> { /* Values submitted by User appear in this table. */ }
-          <br />
-          <div style={{ width: '300px', textAlign: 'left' }}>
-            <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
-            <div style={{ width: '25%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>{this.state.totalSpent}</div>    
         </div>
-          <div style={{ width: '300px', display: 'inline-block' }}>
-            <PieChart slices={[
+        <div style={{ width: '100%', display: 'inline-block' }}>
+          <div style={{ width: '30%', display: 'inline-block' }} ><Table values={this.state.submittedValues} /></div>
+          
+        </div> { /* Values submitted by User appear in this table. */ }
+        <br />
+          <div style={{ width: '100%', textAlign: 'left' }}>
+            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
+            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '40px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
+            <div style={{ width: '25%', display: 'inline-block' }} ><PieChart slices={[
                 {
                   name: 'Grocery',
                   color: '#00000',
@@ -198,8 +200,7 @@ class App extends Component {
               ]}
             />
           </div>
-          <div style={{ width: '300px', display: 'inline-block' }}>
-            {/* Pie Chart for amounts spent in each category */}
+          <div style={{ width: '25%', display: 'inline-block' }}>
             <PieChart slices={[
               {
                 name: 'Grocery',
@@ -230,6 +231,8 @@ class App extends Component {
             />
           </div>
         </div>
+          
+        
         <br /><br />
           { /*<div> Grocery: { Object.values(this.state.catTotals)[0] } </div>
           <div> Venmo: { Object.values(this.state.catTotals)[1] } </div>
