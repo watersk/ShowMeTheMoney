@@ -159,42 +159,43 @@ class App extends Component {
         />
         <br /><br /><br /> 
         <div style={{ width: '100%', textAlign: 'left' }}>
-          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name*</div>
+          <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
         </div>
         <div style={{ width: '100%', display: 'inline-block' }}>
-          <div style={{ width: '30%', display: 'inline-block' }} ><Table values={this.state.submittedValues} /></div>
-          
+        <div style={{ width: '30%', display: 'inline-block' }} ><Table values={this.state.submittedValues} /></div>
+                 
         </div> { /* Values submitted by User appear in this table. */ }
-        <br />
-          <div style={{ width: '100%', textAlign: 'left' }}>
-            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
-            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '40px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
-            <div style={{ width: '25%', display: 'inline-block' }} ><PieChart slices={[
+        <br /><br />
+        <div style={{ width: '100%', textAlign: 'left' }}>
+          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
+          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '43px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
+        </div>
+        <div style={{ width: '25%', display: 'inline-block' }} ><PieChart slices={[
                 {
                   name: 'Grocery',
-                  color: '#00000',
+                  color: '#b300b3',
                   value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100,
                 },
                 {
                   name: 'Venmo',
-                  color: '#ff0000',
+                  color: '#e60000',
                   value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
                 },
                 {
                   name: 'EatOut',
-                  color: '#f0f000',
+                  color: '#3366cc',
                   value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
                 },
                 {
                   name: 'Bills',
-                  color: '#ff00f0',
+                  color: '#00b300',
                   value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100,
                 },
                 {
                   name: 'Entertainment',
-                  color: '#00f0f0',
+                  color: '#ff8c1a',
                   value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100,
                 }
               ]}
@@ -204,34 +205,33 @@ class App extends Component {
             <PieChart slices={[
               {
                 name: 'Grocery',
-                color: '#00000',
+                color: '#b300b3',
                 value: ( Object.values(this.state.catTotals)[0]/(this.state.totalSpent) )*100,
               },
               {
                 name: 'Venmo',
-                color: '#ff0000',
+                color: '#e60000',
                 value: ( Object.values(this.state.catTotals)[1]/(this.state.totalSpent) )*100,
               },
               {
                 name: 'EatOut',
-                color: '#f0f000',
+                color: '#3366cc',
                 value: ( Object.values(this.state.catTotals)[2]/(this.state.totalSpent) )*100,
               },
               {
                 name: 'Bills',
-                color: '#ff00f0',
+                color: '#00b300',
                 value: ( Object.values(this.state.catTotals)[3]/(this.state.totalSpent) )*100,
               },
               {
                 name: 'Entertainment',
-                color: '#00f0f0',
+                color: '#ff8c1a',
                 value: ( Object.values(this.state.catTotals)[4]/(this.state.totalSpent) )*100,
               }
             ]}
             />
           </div>
-        </div>
-          
+                 
         
         <br /><br />
           { /*<div> Grocery: { Object.values(this.state.catTotals)[0] } </div>
