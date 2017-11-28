@@ -23,7 +23,7 @@ const SubmitForm = (
     labelName, labelCategory, labelAmount, totalSpent,
     buttonStyle
   }) => (
-    <div>
+    <div style={{ paddingLeft: '10px' }}>
       {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} />
       {labelCategory}: 
         <div style={{ display: 'inline-block', border: '1px solid black', marginRight: '5px', paddingLeft: '5px', paddingRight: '5px' }}>
@@ -158,20 +158,23 @@ class App extends Component {
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
         <br /><br /><br /> 
-        <div style={{ width: '100%', textAlign: 'left' }}>
+        <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
-        </div>
-        <div style={{ width: '100%', display: 'inline-block' }}>
-        <div style={{ width: '30%', display: 'inline-block' }} ><Table values={this.state.submittedValues} /></div>
-                 
+          <div style={{ width: '100%', display: 'inline-block' }}><Table values={this.state.submittedValues} /></div>
+          <div >
+            Legend goes here.
+            <div style={{ width: '10px', height: '10px', backgroundColor: '#b300b3' }}>
+            </div>
+          </div>         
         </div> { /* Values submitted by User appear in this table. */ }
         <br /><br />
-        <div style={{ width: '100%', textAlign: 'left' }}>
+        <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
           <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
           <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '43px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
         </div>
+        
         <div style={{ width: '25%', display: 'inline-block' }} ><PieChart slices={[
                 {
                   name: 'Grocery',
