@@ -11,10 +11,19 @@ const ddlOptions = [
   { value: 'EatOut', label: 'Eat Out' },
   { value: 'Bills', label: 'Bills' },
   { value: 'Entertainment', label: 'Entertainment' }
-]
+];
 
 // default option to populate in Category DDL (can't be an actual selection)
 const defaultOption = { value: '-Select-', label: '-Select-'};
+
+// array of objects for colors associated with the pie chart
+const pieColors = 
+  { Grocery: '#b300b3',
+    Venmo: '#e60000',
+    EatOut: '#3366cc',
+    Bills: '#00b300' ,
+    Entertainment: '#ff8c1a'
+  };
 
 // Fields to capture User input (including Submit button)
 const SubmitForm = (
@@ -35,11 +44,14 @@ const SubmitForm = (
 )
 
 // Table component maps values entered into a table to show records
-const Table = ({ values }) => (
-  <div style={{ display:'inline-block' }}>
+const Table = ({ values, colors }) => (
+  <div style={{ width: '100%', display:'inline-block' }}>
     {values.map(function(currentValue, index) {
       return(<div style={{ align: "left", marginRight:'5px'}} key={index}>
-        <div style={{ width: '300px', textAlign: 'left' }}>
+        <div style={{ width: '100%', textAlign: 'left' }}>
+          <div style={{ width: '50px', display: 'inline-block' }}>
+            <div style={{ width: '15px', height: '15px', backgroundColor: colors[currentValue.category] }} />
+          </div>
           <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.name}</div>
           <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.category}</div>
           <div style={{ width: '100px', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
@@ -158,21 +170,18 @@ class App extends Component {
           buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
         />
         <br /><br /><br /> 
-        <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
+        <div style={{ width: '100%', textAlign: 'left', paddingLeft: '25px' }}>
+          <div style={{ fontWeight: 'bold', width: '50px', display: 'inline-block' }}>Key</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
           <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
-          <div style={{ width: '100%', display: 'inline-block' }}><Table values={this.state.submittedValues} /></div>
-          <div >
-            Legend goes here.
-            <div style={{ width: '10px', height: '10px', backgroundColor: '#b300b3' }}>
-            </div>
-          </div>         
+          <div style={{ width: '100%', display: 'inline-block' }}><Table values={this.state.submittedValues} colors={pieColors} /></div>
+                   
         </div> { /* Values submitted by User appear in this table. */ }
         <br /><br />
         <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
-          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total $$ Spent:</div>
-          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '43px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
+          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right', paddingLeft: '50px' }}>Total $$ Spent:</div>
+          <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '60px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
         </div>
         
         <div style={{ width: '25%', display: 'inline-block' }} ><PieChart slices={[
