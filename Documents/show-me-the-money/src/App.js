@@ -32,7 +32,7 @@ const SubmitForm = (
     labelName, labelCategory, labelAmount, totalSpent,
     buttonStyle
   }) => (
-    <div style={{ paddingLeft: '10px' }}>
+    <div style={{ paddingLeft: '25px' }}>
       {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} />
       {labelCategory}: 
         <div style={{ display: 'inline-block', border: '1px solid black', marginRight: '5px', paddingLeft: '5px', paddingRight: '5px' }}>
@@ -153,19 +153,21 @@ class App extends Component {
       <div className="App">
         <div style={{ fontSize: '75px', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
         <br /><br /><br />
-        <SubmitForm
-          handleFormSubmit={this.handleFormSubmit}
-          formValueName={this.state.formValueName}
-          formValueCategory={this.state.formValueCategory}
-          formValueAmount={this.state.formValueAmount}
-          handleFormChangeName={this.handleFormChangeName}
-          handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
-          handleFormChangeAmount={this.handleFormChangeAmount}
-          labelName="Name *"
-          labelCategory="Category *"
-          labelAmount="Amount ($) *"
-          buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
-        />
+        <div style={{ width: '100%' }}>
+          <SubmitForm
+            handleFormSubmit={this.handleFormSubmit}
+            formValueName={this.state.formValueName}
+            formValueCategory={this.state.formValueCategory}
+            formValueAmount={this.state.formValueAmount}
+            handleFormChangeName={this.handleFormChangeName}
+            handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
+            handleFormChangeAmount={this.handleFormChangeAmount}
+            labelName="Name *"
+            labelCategory="Category *"
+            labelAmount="Amount ($) *"
+            buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
+          />
+        </div>
         <br /><br /><br /> 
         { (this.state.submittedValues.length === 0) ? <div /> :
           <div style={{ width: '100%', textAlign: 'left', paddingLeft: '25px' }}>
@@ -186,9 +188,12 @@ class App extends Component {
             <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '35px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
           </div>
         }
-        <br />
-        <div style={{ width: '100%', display: 'inline-block' }}>
-          <div style={{ width: '25%', display: 'inline-block' }} >
+        <br /><br />
+        <div style={{ width: '100%', display: 'inline-block', marginLeft: '25px' }}>
+          <div style={{ width: '30%', display: 'inline-block' }} >
+            { this.state.submittedValues.length===0 ? <div /> :
+              <div style={{ width: '100%', display: 'inline-block', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', fontSize: '25px' }}>Representation of Categories</div>
+            }
             <PieChart slices={[
               {
                 name: 'Grocery',
@@ -218,7 +223,10 @@ class App extends Component {
               ]}
             />
           </div>
-          <div style={{ width: '25%', display: 'inline-block' }}>
+          <div style={{ width: '30%', display: 'inline-block', marginLeft: '50px' }}>
+            { this.state.submittedValues.length===0 ? <div /> :
+              <div style={{ width: '100%', display: 'inline-block', textAlign: 'center', fontWeight: 'bold', marginBottom: '15px', fontSize: '25px'}}>Category Spending</div>
+            }
             <PieChart slices={[
               {
                 name: 'Grocery',
@@ -248,51 +256,51 @@ class App extends Component {
               ]}
             />
             </div>
-          <div style={{ width: '25%', display: 'inline-block', verticalAlign: 'top' }}>
+            {  this.state.submittedValues.length===0 ? <div /> :
+              <div style={{ width: '30%', display: 'inline-block', verticalAlign: 'top', marginLeft: '50px', marginTop: '150px' }}>
                 <div>
                   <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>Key</div>
                   <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>Category</div>
-                  <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>%</div>
+                  <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>% Spent</div>
                 </div>
-                <div>
                 <div style={{ width: '80%', display: 'inline-block' }}>
                   <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Grocery'], marginLeft: '40px', marginTop: '10px' }} />
                   <div style={{ width: '40px', display: 'inline-block', paddingLeft: '65px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[0]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '80px' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '79px' }}> {(Object.values(this.state.catTotals)[0]/(this.state.totalSpent))*100}% </div>
+                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '80px', textAlign: 'right' }}>0%</div>
+                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '79px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[0]/(this.state.totalSpent))*100).toFixed(2)}% </div>
                   }
                 </div>
                 <div style={{ width: '80%', display: 'inline-block' }}>
                   <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Venmo'], marginLeft: '40px' }} />
                   <div style={{ width: '40px', display: 'inline-block', paddingLeft: '68px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[1]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px' }}> {(Object.values(this.state.catTotals)[1]/(this.state.totalSpent))*100}% </div>
+                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px', textAlign:'right' }}>0%</div>
+                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[1]/(this.state.totalSpent))*100).toFixed(2)}% </div>
                   }
                 </div>
                 <div style={{ width: '80%', display: 'inline-block' }}>
                   <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['EatOut'], marginLeft: '40px' }} />
                   <div style={{ width: '40px', display: 'inline-block', paddingLeft: '68px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[2]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px' }}> {(Object.values(this.state.catTotals)[2]/(this.state.totalSpent))*100}% </div>
+                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px', textAlign: 'right' }}>0%</div>
+                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px',textAlign: 'right' }}> {((Object.values(this.state.catTotals)[2]/(this.state.totalSpent))*100).toFixed(2)}% </div>
                   }
                 </div>
                 <div style={{ width: '80%', display: 'inline-block' }}>
                   <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Bills'], marginLeft: '40px' }} />
                   <div style={{ width: '40px', display: 'inline-block', paddingLeft: '75px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[3]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px',display: 'inline-block', paddingLeft: '70px' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '69px' }}> {(Object.values(this.state.catTotals)[3]/(this.state.totalSpent))*100}% </div>
+                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px',display: 'inline-block', paddingLeft: '70px', textAlign: 'right' }}>0%</div>
+                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '69px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[3]/(this.state.totalSpent))*100).toFixed(2)}% </div>
                   }
                 </div>
                 <div style={{ width: '80%', display: 'inline-block' }}>
                   <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Entertainment'], marginLeft: '40px' }} />
                   <div style={{ width: '40px', display: 'inline-block', paddingLeft: '45px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[4]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '100px' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '100px' }}> {(Object.values(this.state.catTotals)[4]/(this.state.totalSpent))*100}% </div>
+                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '100px', textAlign: 'right' }}>0%</div>
+                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '100px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[4]/(this.state.totalSpent))*100).toFixed(2)}% </div>
                   }
                 </div>
               </div>
+            }
           </div>
-        </div>
         </div>
     );
   }
