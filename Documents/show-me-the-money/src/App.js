@@ -192,7 +192,7 @@ class App extends Component {
         <div style={{ width: '100%', display: 'inline-block', marginLeft: '25px' }}>
           <div style={{ width: '30%', display: 'inline-block' }} >
             { this.state.submittedValues.length===0 ? <div /> :
-              <div style={{ width: '100%', display: 'inline-block', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', fontSize: '25px' }}>Representation of Categories</div>
+              <div style={{ width: '100%', display: 'inline-block', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', fontSize: '25px' }}>Categories</div>
             }
             <PieChart slices={[
               {
