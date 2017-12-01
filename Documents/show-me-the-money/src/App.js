@@ -154,7 +154,8 @@ class App extends Component {
         <br /><br />
         <div style={{ fontSize: '12px', color: 'red', fontWeight: 'bold', fontStyle: 'italic', paddingLeft: '25px' }}>Fields marked with an asterisk (*) are required fields.</div>
         <br />
-        <div style={{ width: '100%' }}>
+
+        <div style={{ width: '100%' }}> {/* Submit Form */}
           <SubmitForm
             handleFormSubmit={this.handleFormSubmit}
             formValueName={this.state.formValueName}
@@ -169,10 +170,11 @@ class App extends Component {
             buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
           />
         </div>
-        <br /><br /><br /> 
-        { (this.state.submittedValues.length === 0) ? <div /> :
+
+        <br /><br /><br />
+        {/* Hide Table headers until there is data */}
+        { (this.state.submittedValues.length === 0) ? <div /> : 
           <div style={{ width: '100%', textAlign: 'left', paddingLeft: '25px' }}>
-            { /* <div style={{ fontWeight: 'bold', width: '50px', display: 'inline-block' }}>Key</div> */ }
             <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
             <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
             <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
@@ -181,8 +183,9 @@ class App extends Component {
             </div>         
           </div> /* Values submitted by User appear in this table. */
         }
-        
         <br />
+
+        {/* Hide Amount Spent until there's data (and it's not 0) */}
         { (this.state.submittedValues.length === 0) ? <div /> :
           <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
             <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right', paddingLeft: '25px' }}>Total $$ Spent:</div>
@@ -190,6 +193,8 @@ class App extends Component {
           </div>
         }
         <br /><br />
+
+        {/* Pie Chart and Legends, hidden until there's data */}
         <div style={{ width: '100%', display: 'inline-block', marginLeft: '25px' }}>
           <div style={{ width: '30%', display: 'inline-block' }} >
             { this.state.submittedValues.length===0 ? <div /> :
