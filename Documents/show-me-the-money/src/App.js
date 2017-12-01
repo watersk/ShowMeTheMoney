@@ -33,12 +33,12 @@ const SubmitForm = (
     buttonStyle
   }) => (
     <div style={{ paddingLeft: '25px' }}>
-      {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} />
+      {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} placeholder="Name" />
       {labelCategory}: 
         <div style={{ display: 'inline-block', border: '1px solid black', marginRight: '5px', paddingLeft: '5px', paddingRight: '5px' }}>
           <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} />
         </div>
-      {labelAmount} : <input type="text" style={{ display: 'inline-block', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} />
+      {labelAmount} : <input type="text" style={{ display: 'inline-block', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder="0.00" />
       <span style={buttonStyle} onClick={handleFormSubmit}>Submit</span>
     </div> 
 )
@@ -141,7 +141,6 @@ class App extends Component {
 
   handleFormChangeCategoryDDL(valueObj) { // When data is entered in Category field, save somewhere
     this.setState({ formValueCategory: valueObj.value });
-
   }
 
   handleFormChangeAmount(e) { // When data is entered in Amount field save somewhere
@@ -152,7 +151,9 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{ fontSize: '75px', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
-        <br /><br /><br />
+        <br /><br />
+        <div style={{ fontSize: '12px', color: 'red', fontWeight: 'bold', fontStyle: 'italic', paddingLeft: '25px' }}>Fields marked with an asterisk (*) are required fields.</div>
+        <br />
         <div style={{ width: '100%' }}>
           <SubmitForm
             handleFormSubmit={this.handleFormSubmit}
