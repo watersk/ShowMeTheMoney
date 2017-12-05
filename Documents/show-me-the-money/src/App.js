@@ -39,7 +39,7 @@ const SubmitForm = (
           <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} />
         </div>
       {labelAmount} : <input type="text" style={{ display: 'inline-block', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder="0.00" />
-      <span style={buttonStyle} onClick={handleFormSubmit}>Submit</span>
+      <span style={buttonStyle} onClick={handleFormSubmit}>Add</span>
     </div> 
 )
 
