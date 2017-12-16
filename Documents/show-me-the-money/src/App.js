@@ -32,13 +32,17 @@ const SubmitForm = (
     labelName, labelCategory, labelAmount, totalSpent,
     buttonStyle
   }) => (
-    <div style={{ paddingLeft: '25px' }}>
-      {labelName}: <input type="text"  style={{ display: 'inline-block', height: '20px', marginRight: '5px'}} onChange={handleFormChangeName} value={formValueName} placeholder="Name" />
+    <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+      {labelName}: <input type="text"  style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px'}} onChange={handleFormChangeName} value={formValueName} placeholder=" Name" />
+      <br />
       {labelCategory}: 
-        <div style={{ display: 'inline-block', border: '1px solid black', marginRight: '5px', paddingLeft: '5px', paddingRight: '5px' }}>
+        <div style={{ display: 'inline-block', border: '1px solid black', width: '100%' }}>
           <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} />
         </div>
-      {labelAmount} : <input type="text" style={{ display: 'inline-block', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder="0.00" />
+        <br />
+      {labelAmount} : <input type="text" style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder=" 00.00" />
+      <br />
+      <br />
       <span style={buttonStyle} onClick={handleFormSubmit}>Add</span>
     </div> 
 )
@@ -48,10 +52,10 @@ const Table = ({ values }) => (
   <div style={{ width: '100%', display:'inline-block' }}>
     {values.map(function(currentValue, index) {
       return(<div style={{ align: "left", marginRight:'5px'}} key={index}>
-        <div style={{ width: '100%', textAlign: 'left' }}>
-          <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.name}</div>
-          <div style={{ width: '100px', display: 'inline-block' }}>{currentValue.category}</div>
-          <div style={{ width: '100px', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
+        <div style={{ width: '50%', textAlign: 'left', alighn: 'left'}}>
+          <div style={{ width: '10%', display: 'inline-block' }}>{currentValue.name}</div>
+          <div style={{ width: '10%', display: 'inline-block' }}>{currentValue.category}</div>
+          <div style={{ width: '10%', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
         </div>
       </div>)
     })}
@@ -150,9 +154,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{ fontSize: '75px', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
+        <div style={{ fontSize: '250%', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
         <br /><br />
-        <div style={{ fontSize: '12px', color: 'red', fontWeight: 'bold', fontStyle: 'italic', paddingLeft: '25px' }}>Fields marked with an asterisk (*) are required fields.</div>
+        { /*<div style={{ fontSize: '10px', color: 'red', fontWeight: 'bold', fontStyle: 'italic', paddingLeft: '25px' }}>Fields marked with an asterisk (*) are required fields.</div> */ }
         <br />
 
         <div style={{ width: '100%' }}> {/* Submit Form */}
@@ -167,7 +171,7 @@ class App extends Component {
             labelName="Name *"
             labelCategory="Category *"
             labelAmount="Amount ($) *"
-            buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px' }}
+            buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px', display: 'inline-block' }}
           />
         </div>
 
