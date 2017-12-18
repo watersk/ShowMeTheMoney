@@ -32,7 +32,7 @@ const SubmitForm = (
     labelName, labelCategory, labelAmount, totalSpent,
     buttonStyle
   }) => (
-    <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+    <div style={{ paddingLeft: '25%', paddingRight: '25%' }}>
       {labelName}: <input type="text"  style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px'}} onChange={handleFormChangeName} value={formValueName} placeholder=" Name" />
       <br />
       {labelCategory}: 
@@ -43,7 +43,7 @@ const SubmitForm = (
       {labelAmount} : <input type="text" style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder=" 00.00" />
       <br />
       <br />
-      <span style={buttonStyle} onClick={handleFormSubmit}>Add</span>
+      <div style={buttonStyle} onClick={handleFormSubmit}>Add</div>
     </div> 
 )
 
