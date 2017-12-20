@@ -52,10 +52,10 @@ const Table = ({ values }) => (
   <div style={{ width: '100%', display:'inline-block' }}>
     {values.map(function(currentValue, index) {
       return(<div style={{ align: "left", marginRight:'5px'}} key={index}>
-        <div style={{ width: '50%', textAlign: 'left', alighn: 'left'}}>
-          <div style={{ width: '10%', display: 'inline-block' }}>{currentValue.name}</div>
-          <div style={{ width: '10%', display: 'inline-block' }}>{currentValue.category}</div>
-          <div style={{ width: '10%', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
+        <div style={{ width: '100%', align: 'left' }}>
+          <div style={{ width: '25%', display: 'inline-block', textAlign: 'center' }}>{currentValue.name}</div>
+          <div style={{ width: '25%', display: 'inline-block', textAlign: 'center' }}>{currentValue.category}</div>
+          <div style={{ width: '25%', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
         </div>
       </div>)
     })}
@@ -177,11 +177,11 @@ class App extends Component {
 
         <br /><br /><br />
         {/* Hide Table headers until there is data */}
-        { (this.state.submittedValues.length === 0) ? <div /> : 
-          <div style={{ width: '100%', textAlign: 'left', paddingLeft: '25px' }}>
-            <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Name</div>
-            <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block' }}>Category</div>
-            <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
+        { /* (this.state.submittedValues.length === 0) ? <div /> : */
+          <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10%' }}>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Name</div>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Category</div>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
             <div style={{ width: '100%', display: 'inline-block' }}>
               <Table values={this.state.submittedValues} />
             </div>         
@@ -190,10 +190,10 @@ class App extends Component {
         <br />
 
         {/* Hide Amount Spent until there's data (and it's not 0) */}
-        { (this.state.submittedValues.length === 0) ? <div /> :
-          <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10px' }}>
-            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right', paddingLeft: '25px' }}>Total $$ Spent:</div>
-            <div style={{ width: '16%', fontWeight: 'bold', display: 'inline-block', textAlign: 'left', paddingLeft: '35px' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div>
+        { /* (this.state.submittedValues.length === 0) ? <div /> : */
+          <div style={{ width: '100%', textAlign: 'left' }}>
+            <div style={{ width: '85%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total:    {parseFloat(this.state.totalSpent).toFixed(2)}</div>
+            { /* <div style={{ width: '35%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right', paddingRight: '15%' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div> */ }
           </div>
         }
         <br /><br />
