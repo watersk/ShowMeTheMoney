@@ -160,6 +160,7 @@ class App extends Component {
         <br />
 
         <div style={{ width: '100%' }}> {/* Submit Form */}
+          <div style={{ width: '45%', display: 'inline-block' }}>
           <SubmitForm
             handleFormSubmit={this.handleFormSubmit}
             formValueName={this.state.formValueName}
@@ -173,11 +174,26 @@ class App extends Component {
             labelAmount="Amount ($) *"
             buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px', display: 'inline-block' }}
           />
+          </div>
+          <div style={{ width: '45%', display: 'inline-block', verticalAlign: 'top' }}>
+          <div style={{ width: '100%', paddingLeft: '10%', textAlign: 'left' }}>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Name</div>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Category</div>
+            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
+            <div style={{ width: '100%', display: 'inline-block' }}>
+              <Table values={this.state.submittedValues} />
+            </div>
+            <div style={{ width: '100%', textAlign: 'left' }}>
+            <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total:    {parseFloat(this.state.totalSpent).toFixed(2)}</div>
+
+          </div>         
+          </div>
+          </div>
         </div>
 
         <br /><br /><br />
         {/* Hide Table headers until there is data */}
-        { /* (this.state.submittedValues.length === 0) ? <div /> : */
+        { /* (this.state.submittedValues.length === 0) ? <div /> : 
           <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10%' }}>
             <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Name</div>
             <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Category</div>
@@ -191,15 +207,12 @@ class App extends Component {
 
         {/* Hide Amount Spent until there's data (and it's not 0) */}
         { /* (this.state.submittedValues.length === 0) ? <div /> : */
-          <div style={{ width: '100%', textAlign: 'left' }}>
-            <div style={{ width: '85%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total:    {parseFloat(this.state.totalSpent).toFixed(2)}</div>
-            { /* <div style={{ width: '35%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right', paddingRight: '15%' }}>{parseFloat(this.state.totalSpent).toFixed(2)}</div> */ }
-          </div>
+          
         }
         <br /><br />
 
         {/* Pie Chart and Legends, hidden until there's data */}
-        <div style={{ width: '100%', display: 'inline-block', marginLeft: '25px' }}>
+        <div style={{ width: '100%', display: 'inline-block' }}>
           <div style={{ width: '30%', display: 'inline-block' }} >
             { this.state.submittedValues.length===0 ? <div /> :
               <div style={{ width: '100%', display: 'inline-block', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', fontSize: '25px' }}>Categories</div>
