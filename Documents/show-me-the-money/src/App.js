@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-dropdown';
 import PieChart from 'react-simple-pie-chart';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 import logo from './logo.svg';
 import './App.css';
 
@@ -25,22 +31,41 @@ const pieColors =
     Entertainment: '#ff8c1a'
   };
 
+const styles = {
+  customWidth: {
+    width: 200,
+  },
+};
+
 // Fields to capture User input (including Submit button)
 const SubmitForm = (
   { handleFormSubmit, formValueName, formValueCategory, formValueAmount, 
-    handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, 
-    labelName, labelCategory, labelAmount, totalSpent,
+    handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, totalSpent,
     buttonStyle
   }) => (
-    <div style={{ paddingLeft: '25%', paddingRight: '25%' }}>
-      {labelName}: <input type="text"  style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px'}} onChange={handleFormChangeName} value={formValueName} placeholder=" Name" />
+    <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+      <TextField
+        hintText="Enter a name for the transaction."
+        id='name'
+        name='Name'
+        type='Name'
+        onChange={handleFormChangeName}
+        value={formValueName}
+      />
       <br />
-      {labelCategory}: 
-        <div style={{ display: 'inline-block', border: '1px solid black', width: '100%' }}>
-          <Dropdown options= {ddlOptions} onChange={handleFormChangeCategoryDDL} value={defaultOption} />
-        </div>
-        <br />
-      {labelAmount} : <input type="text" style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder=" 00.00" />
+      <DropDownMenu
+        value={ddlOptions}
+        autoWidth={false}
+        style={styles.customWidth}
+        onChange={handleFormChangeCategoryDDL}>
+        <MenuItem value={ddlOptions[0].value} primaryText={ddlOptions[0].label} />
+        <MenuItem value={ddlOptions[1].value} primaryText={ddlOptions[1].label} />
+        <MenuItem value={ddlOptions[2].value} primaryText={ddlOptions[2].label} />
+        <MenuItem value={ddlOptions[3].value} primaryText={ddlOptions[3].label} />
+        <MenuItem value={ddlOptions[4].value} primaryText={ddlOptions[4].label} />
+      </DropDownMenu>
+      <br />
+      labelAmount: <input type="text" style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder=" 00.00" />
       <br />
       <br />
       <div style={buttonStyle} onClick={handleFormSubmit}>Add</div>
@@ -154,177 +179,34 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{ fontSize: '250%', textAlign: 'center' }}>Show Me the Money!</div> { /* Title */ }
-        <br /><br />
-        { /*<div style={{ fontSize: '10px', color: 'red', fontWeight: 'bold', fontStyle: 'italic', paddingLeft: '25px' }}>Fields marked with an asterisk (*) are required fields.</div> */ }
-        <br />
-
-        <div style={{ width: '100%' }}> {/* Submit Form */}
-          <div style={{ width: '45%', display: 'inline-block' }}>
-          <SubmitForm
-            handleFormSubmit={this.handleFormSubmit}
-            formValueName={this.state.formValueName}
-            formValueCategory={this.state.formValueCategory}
-            formValueAmount={this.state.formValueAmount}
-            handleFormChangeName={this.handleFormChangeName}
-            handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
-            handleFormChangeAmount={this.handleFormChangeAmount}
-            labelName="Name *"
-            labelCategory="Category *"
-            labelAmount="Amount ($) *"
-            buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px', display: 'inline-block' }}
+        <MuiThemeProvider>
+          <AppBar
+            title="Show Me The Money!"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
-          </div>
-          <div style={{ width: '45%', display: 'inline-block', verticalAlign: 'top' }}>
-          <div style={{ width: '100%', paddingLeft: '10%', textAlign: 'left' }}>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Name</div>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Category</div>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
-            <div style={{ width: '100%', display: 'inline-block' }}>
-              <Table values={this.state.submittedValues} />
-            </div>
-            <div style={{ width: '100%', textAlign: 'left' }}>
-            <div style={{ width: '75%', fontWeight: 'bold', display: 'inline-block', textAlign: 'right' }}>Total:    {parseFloat(this.state.totalSpent).toFixed(2)}</div>
-
-          </div>         
-          </div>
-          </div>
-        </div>
-
-        <br /><br /><br />
-        {/* Hide Table headers until there is data */}
-        { /* (this.state.submittedValues.length === 0) ? <div /> : 
-          <div style={{ width: '100%', textAlign: 'left', paddingLeft: '10%' }}>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Name</div>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'center' }}>Category</div>
-            <div style={{ fontWeight: 'bold', width: '25%', display: 'inline-block', textAlign: 'right' }}>Amount ($)</div>
-            <div style={{ width: '100%', display: 'inline-block' }}>
-              <Table values={this.state.submittedValues} />
-            </div>         
-          </div> /* Values submitted by User appear in this table. */
-        }
-        <br />
-
-        {/* Hide Amount Spent until there's data (and it's not 0) */}
-        { /* (this.state.submittedValues.length === 0) ? <div /> : */
-          
-        }
-        <br /><br />
-
-        {/* Pie Chart and Legends, hidden until there's data */}
-        <div style={{ width: '100%', display: 'inline-block' }}>
-          <div style={{ width: '30%', display: 'inline-block' }} >
-            { this.state.submittedValues.length===0 ? <div /> :
-              <div style={{ width: '100%', display: 'inline-block', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', fontSize: '25px' }}>Categories</div>
-            }
-            <PieChart slices={[
-              {
-                name: 'Grocery',
-                color: '#b300b3',
-                value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Venmo',
-                color: '#e60000',
-                value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'EatOut',
-                color: '#3366cc',
-                value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Bills',
-                color: '#00b300',
-                value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100,
-              },
-              {
-                name: 'Entertainment',
-                color: '#ff8c1a',
-                value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100,
-              }
-              ]}
+          <br />
+          <br />
+          <Card>
+            <CardHeader
+              title="Submit A Transaction"
+              actAsExpander={true}
+              showExpandableButton={true}
             />
-          </div>
-          <div style={{ width: '30%', display: 'inline-block', marginLeft: '50px' }}>
-            { this.state.submittedValues.length===0 ? <div /> :
-              <div style={{ width: '100%', display: 'inline-block', textAlign: 'center', fontWeight: 'bold', marginBottom: '15px', fontSize: '25px'}}>Category Spending</div>
-            }
-            <PieChart slices={[
-              {
-                name: 'Grocery',
-                color: '#b300b3',
-                value: ( Object.values(this.state.catTotals)[0]/(this.state.totalSpent) )*100,
-              },
-              {
-                name: 'Venmo',
-                color: '#e60000',
-                value: ( Object.values(this.state.catTotals)[1]/(this.state.totalSpent) )*100,
-              },
-              {
-                name: 'EatOut',
-                color: '#3366cc',
-                value: ( Object.values(this.state.catTotals)[2]/(this.state.totalSpent) )*100,
-              },
-              {
-                name: 'Bills',
-                color: '#00b300',
-                value: ( Object.values(this.state.catTotals)[3]/(this.state.totalSpent) )*100,
-              },
-              {
-                name: 'Entertainment',
-                color: '#ff8c1a',
-                value: ( Object.values(this.state.catTotals)[4]/(this.state.totalSpent) )*100,
-              }
-              ]}
-            />
-            </div>
-            {  this.state.submittedValues.length===0 ? <div /> :
-              <div style={{ width: '30%', display: 'inline-block', verticalAlign: 'top', marginLeft: '50px', marginTop: '150px' }}>
-                <div>
-                  <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>Key</div>
-                  <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>Category</div>
-                  <div style={{ fontWeight: 'bold', width: '100px', display: 'inline-block', textAlign: 'center' }}>% Spent</div>
-                </div>
-                <div style={{ width: '80%', display: 'inline-block' }}>
-                  <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Grocery'], marginLeft: '40px', marginTop: '10px' }} />
-                  <div style={{ width: '40px', display: 'inline-block', paddingLeft: '65px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[0]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '80px', textAlign: 'right' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '79px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[0]/(this.state.totalSpent))*100).toFixed(2)}% </div>
-                  }
-                </div>
-                <div style={{ width: '80%', display: 'inline-block' }}>
-                  <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Venmo'], marginLeft: '40px' }} />
-                  <div style={{ width: '40px', display: 'inline-block', paddingLeft: '68px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[1]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px', textAlign:'right' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[1]/(this.state.totalSpent))*100).toFixed(2)}% </div>
-                  }
-                </div>
-                <div style={{ width: '80%', display: 'inline-block' }}>
-                  <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['EatOut'], marginLeft: '40px' }} />
-                  <div style={{ width: '40px', display: 'inline-block', paddingLeft: '68px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[2]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '77px', textAlign: 'right' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '77px',textAlign: 'right' }}> {((Object.values(this.state.catTotals)[2]/(this.state.totalSpent))*100).toFixed(2)}% </div>
-                  }
-                </div>
-                <div style={{ width: '80%', display: 'inline-block' }}>
-                  <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Bills'], marginLeft: '40px' }} />
-                  <div style={{ width: '40px', display: 'inline-block', paddingLeft: '75px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[3]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px',display: 'inline-block', paddingLeft: '70px', textAlign: 'right' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '69px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[3]/(this.state.totalSpent))*100).toFixed(2)}% </div>
-                  }
-                </div>
-                <div style={{ width: '80%', display: 'inline-block' }}>
-                  <div style={{ width: '15px', height: '15px', display: 'inline-block', backgroundColor: pieColors['Entertainment'], marginLeft: '40px' }} />
-                  <div style={{ width: '40px', display: 'inline-block', paddingLeft: '45px', textAlign: 'center' }}> {Object.keys(this.state.catValues)[4]} </div>
-                  { (this.state.totalSpent) === 0 ? <div style={{ width: '15px', display: 'inline-block', paddingLeft: '100px', textAlign: 'right' }}>0%</div>
-                    : <div style={{ width: '15px', display: 'inline-block', textAlign: 'right', paddingLeft: '100px', textAlign: 'right' }}> {((Object.values(this.state.catTotals)[4]/(this.state.totalSpent))*100).toFixed(2)}% </div>
-                  }
-                </div>
-              </div>
-            }
-          </div>
-        </div>
+            <CardText expandable={true}>
+              <SubmitForm
+                handleFormSubmit={this.handleFormSubmit}
+                formValueName={this.state.formValueName}
+                formValueCategory={this.state.formValueCategory}
+                formValueAmount={this.state.formValueAmount}
+                handleFormChangeName={this.handleFormChangeName}
+                handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
+                handleFormChangeAmount={this.handleFormChangeAmount}
+                buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px', display: 'inline-block' }}
+              />
+            </CardText>
+          </Card>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }
