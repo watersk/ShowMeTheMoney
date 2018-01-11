@@ -5,8 +5,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import logo from './logo.svg';
 import './App.css';
 
@@ -32,9 +33,10 @@ const pieColors =
   };
 
 const styles = {
-  customWidth: {
-    width: 200,
-  },
+  cardWidth: {
+    marginLeft: '10%',
+    marginRight: '10%'
+  }
 };
 
 // Fields to capture User input (including Submit button)
@@ -45,30 +47,39 @@ const SubmitForm = (
   }) => (
     <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
       <TextField
-        hintText="Enter a name for the transaction."
         id='name'
         name='Name'
         type='Name'
         onChange={handleFormChangeName}
         value={formValueName}
+        floatingLabelText="Name"
+        floatingLabelFixed={true}
       />
       <br />
-      <DropDownMenu
-        value={ddlOptions}
-        autoWidth={false}
-        style={styles.customWidth}
+      <SelectField
+        floatingLabelText="Category"
+        value={formValueCategory}
         onChange={handleFormChangeCategoryDDL}>
         <MenuItem value={ddlOptions[0].value} primaryText={ddlOptions[0].label} />
         <MenuItem value={ddlOptions[1].value} primaryText={ddlOptions[1].label} />
         <MenuItem value={ddlOptions[2].value} primaryText={ddlOptions[2].label} />
         <MenuItem value={ddlOptions[3].value} primaryText={ddlOptions[3].label} />
         <MenuItem value={ddlOptions[4].value} primaryText={ddlOptions[4].label} />
-      </DropDownMenu>
+      </SelectField>
       <br />
-      labelAmount: <input type="text" style={{ width: '100%', display: 'inline-block', border: '1px solid black', height: '20px', marginRight: '5px' }} onChange={handleFormChangeAmount} value={formValueAmount} placeholder=" 00.00" />
+      <TextField
+        id='amount'
+        name='Amount'
+        type='amount'
+        onChange={handleFormChangeAmount}
+        value={formValueAmount}
+        floatingLabelText="Amount ($)"
+        floatingLabelFixed={true}
+        hintText='0.00'
+      />
       <br />
       <br />
-      <div style={buttonStyle} onClick={handleFormSubmit}>Add</div>
+      <RaisedButton label="Add" primary={true} />
     </div> 
 )
 
@@ -168,8 +179,8 @@ class App extends Component {
     this.setState({ formValueName: e.target.value });
   }
 
-  handleFormChangeCategoryDDL(valueObj) { // When data is entered in Category field, save somewhere
-    this.setState({ formValueCategory: valueObj.value });
+  handleFormChangeCategoryDDL(event, index, value) { // When data is entered in Category field, save somewhere
+    this.setState({ formValueCategory: value });
   }
 
   handleFormChangeAmount(e) { // When data is entered in Amount field save somewhere
@@ -186,7 +197,7 @@ class App extends Component {
           />
           <br />
           <br />
-          <Card>
+          <Card style={styles.cardWidth}>
             <CardHeader
               title="Submit A Transaction"
               actAsExpander={true}
