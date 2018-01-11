@@ -8,6 +8,14 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import logo from './logo.svg';
 import './App.css';
 
@@ -42,8 +50,7 @@ const styles = {
 // Fields to capture User input (including Submit button)
 const SubmitForm = (
   { handleFormSubmit, formValueName, formValueCategory, formValueAmount, 
-    handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, totalSpent,
-    buttonStyle
+    handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, totalSpent
   }) => (
     <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
       <TextField
@@ -79,23 +86,32 @@ const SubmitForm = (
       />
       <br />
       <br />
-      <RaisedButton label="Add" primary={true} />
+      <RaisedButton label="Add" primary={true}
+        onClick={handleFormSubmit} />
     </div> 
 )
 
 // Table component maps values entered into a table to show records
-const Table = ({ values }) => (
-  <div style={{ width: '100%', display:'inline-block' }}>
+const TableData = ({ values }) => (
+  <Table fixedHeader={true}>
+    <TableHeader enableSelectAll={false}>
+      <TableRow>
+        <TableHeaderColumn>Name</TableHeaderColumn>
+        <TableHeaderColumn>Category</TableHeaderColumn>
+        <TableHeaderColumn>Amount</TableHeaderColumn>
+      </TableRow>
+    </TableHeader>
+    <TableBody displayRowCheckbox={false} stripedRows={true}>
     {values.map(function(currentValue, index) {
-      return(<div style={{ align: "left", marginRight:'5px'}} key={index}>
-        <div style={{ width: '100%', align: 'left' }}>
-          <div style={{ width: '25%', display: 'inline-block', textAlign: 'center' }}>{currentValue.name}</div>
-          <div style={{ width: '25%', display: 'inline-block', textAlign: 'center' }}>{currentValue.category}</div>
-          <div style={{ width: '25%', display: 'inline-block', textAlign: 'right' }}>{currentValue.amount}</div>
-        </div>
-      </div>)
-    })}
-  </div>
+      return(
+          <TableRow striped={true}> key={index}>
+            <TableRowColumn>{currentValue.name}</TableRowColumn>
+            <TableRowColumn>{currentValue.category}</TableRowColumn>
+            <TableRowColumn>{currentValue.amount}</TableRowColumn>
+          </TableRow>
+      )})}
+    </TableBody>
+  </Table>
 )
 
 class App extends Component {
@@ -199,7 +215,7 @@ class App extends Component {
           <br />
           <Card style={styles.cardWidth}>
             <CardHeader
-              title="Submit A Transaction"
+              title="Submit Transaction"
               actAsExpander={true}
               showExpandableButton={true}
             />
@@ -212,12 +228,23 @@ class App extends Component {
                 handleFormChangeName={this.handleFormChangeName}
                 handleFormChangeCategoryDDL={this.handleFormChangeCategoryDDL}
                 handleFormChangeAmount={this.handleFormChangeAmount}
-                buttonStyle={{ backgroundColor: 'blue', color: 'white', height: '20px', padding: '3px 10px', borderRadius: '4px', display: 'inline-block' }}
               />
             </CardText>
           </Card>
+          <br />
+          <br />
+          <Card style={styles.cardWidth}>
+            <CardHeader
+              title="Added Transactions"
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              <TableData values={this.state.submittedValues} />
+            </CardText>
+          </Card>
         </MuiThemeProvider>
-      </div>
+        </div>
     );
   }
 }
