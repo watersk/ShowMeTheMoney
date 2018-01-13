@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {
   Table,
   TableBody,
@@ -16,6 +17,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 import logo from './logo.svg';
 import './App.css';
 
@@ -44,6 +47,16 @@ const styles = {
   cardWidth: {
     marginLeft: '10%',
     marginRight: '10%'
+  },
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+    textAlign: 'center'
+  },
+  other: {
+    marginLeft:20
   }
 };
 
@@ -52,56 +65,64 @@ const SubmitForm = (
   { handleFormSubmit, formValueName, formValueCategory, formValueAmount, 
     handleFormChangeName, handleFormChangeCategoryDDL, handleFormChangeAmount, totalSpent
   }) => (
-    <div style={{ paddingLeft: '10%', paddingRight: '10%' }}>
-      <TextField
-        id='name'
-        name='Name'
-        type='Name'
-        onChange={handleFormChangeName}
-        value={formValueName}
-        floatingLabelText="Name"
-        floatingLabelFixed={true}
+    <div>
+      <Paper zDepth={2}>
+        <TextField
+          id='name'
+          name='Name'
+          type='Name'
+          hintText="Name"
+          style={styles.other}
+          underlineShow={false}
+          onChange={handleFormChangeName}
+          value={formValueName}
+        />
+        <Divider />
+        <SelectField
+          hintText="Category"
+          style={styles.other}
+          underlineShow={false}
+          value={formValueCategory}
+          onChange={handleFormChangeCategoryDDL}>
+          <MenuItem value={ddlOptions[0].value} primaryText={ddlOptions[0].label} />
+          <MenuItem value={ddlOptions[1].value} primaryText={ddlOptions[1].label} />
+          <MenuItem value={ddlOptions[2].value} primaryText={ddlOptions[2].label} />
+          <MenuItem value={ddlOptions[3].value} primaryText={ddlOptions[3].label} />
+          <MenuItem value={ddlOptions[4].value} primaryText={ddlOptions[4].label} />
+        </SelectField>
+        <Divider />
+        <TextField
+          id='amount'
+          name='Amount'
+          type='amount'
+          hintText="Amount"
+          style={styles.other}
+          underlineShow={false}
+          onChange={handleFormChangeAmount}
+          value={formValueAmount}
+        />
+        <Divider />
+      </Paper>
+      <br />
+      <RaisedButton label="Add"
+        primary={true}
+        onClick={handleFormSubmit}
+        fullWidth={true}
       />
-      <br />
-      <SelectField
-        floatingLabelText="Category"
-        value={formValueCategory}
-        onChange={handleFormChangeCategoryDDL}>
-        <MenuItem value={ddlOptions[0].value} primaryText={ddlOptions[0].label} />
-        <MenuItem value={ddlOptions[1].value} primaryText={ddlOptions[1].label} />
-        <MenuItem value={ddlOptions[2].value} primaryText={ddlOptions[2].label} />
-        <MenuItem value={ddlOptions[3].value} primaryText={ddlOptions[3].label} />
-        <MenuItem value={ddlOptions[4].value} primaryText={ddlOptions[4].label} />
-      </SelectField>
-      <br />
-      <TextField
-        id='amount'
-        name='Amount'
-        type='amount'
-        onChange={handleFormChangeAmount}
-        value={formValueAmount}
-        floatingLabelText="Amount ($)"
-        floatingLabelFixed={true}
-        hintText='0.00'
-      />
-      <br />
-      <br />
-      <RaisedButton label="Add" primary={true}
-        onClick={handleFormSubmit} />
     </div> 
 )
 
 // Table component maps values entered into a table to show records
 const TableData = ({ values }) => (
   <Table fixedHeader={true}>
-    <TableHeader enableSelectAll={false}>
+    <TableHeader enableSelectAll={true}>
       <TableRow>
         <TableHeaderColumn>Name</TableHeaderColumn>
         <TableHeaderColumn>Category</TableHeaderColumn>
         <TableHeaderColumn>Amount</TableHeaderColumn>
       </TableRow>
     </TableHeader>
-    <TableBody displayRowCheckbox={false} stripedRows={true}>
+    <TableBody displayRowCheckbox={true} stripedRows={true}>
     {values.map(function(currentValue, index) {
       return(
           <TableRow striped={true}> key={index}>
@@ -213,7 +234,9 @@ class App extends Component {
           />
           <br />
           <br />
-          <Card style={styles.cardWidth}>
+          <Card style={styles.cardWidth}
+            expanded={true}
+            >
             <CardHeader
               title="Submit Transaction"
               actAsExpander={true}
@@ -240,7 +263,88 @@ class App extends Component {
               showExpandableButton={true}
             />
             <CardText expandable={true}>
-              <TableData values={this.state.submittedValues} />
+              { this.state.submittedValues.length===0 ? <div style={{ textAlign: 'center' }}>No Data to Show</div> :
+                <TableData values={this.state.submittedValues} />
+              }
+            </CardText>
+          </Card>
+          <br />
+          <br />
+          <Card style={styles.cardWidth}>
+            <CardHeader
+              title="Transaction Analysis"
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              { this.state.submittedValues.length===0 ? <div style={{ textAlign: 'center' }}>No Data to Show</div> : 
+                <Tabs>
+                  <Tab label="Category">
+                    <div>
+                      <PieChart slices={[
+                        {
+                          name: 'Grocery',
+                          color: '#b300b3',
+                          value: ( Object.values(this.state.catValues)[0]/(this.state.submittedValues.length) )*100
+                        },
+                        {
+                          name: 'Venmo',
+                          color: '#e60000',
+                          value: ( Object.values(this.state.catValues)[1]/(this.state.submittedValues.length) )*100
+                        },
+                        {
+                          name: 'EatOut',
+                          color: '#3366cc',
+                          value: ( Object.values(this.state.catValues)[2]/(this.state.submittedValues.length) )*100
+                        },
+                        {
+                          name: 'Bills',
+                          color: '#00b300',
+                          value: ( Object.values(this.state.catValues)[3]/(this.state.submittedValues.length) )*100
+                        },
+                        {
+                          name: 'Entertainment',
+                          color: '#ff8c1a',
+                          value: ( Object.values(this.state.catValues)[4]/(this.state.submittedValues.length) )*100
+                        }
+                      ]}
+                      />
+                    </div>
+                  </Tab>
+                  <Tab label="Amount By Category">
+                    <div>
+                      <PieChart slices={[
+                        {
+                          name: 'Grocery',
+                          color: '#b300b3',
+                          value: ( Object.values(this.state.catTotals)[0]/(this.state.totalSpent) )*100
+                        },
+                        {
+                          name: 'Venmo',
+                          color: '#e60000',
+                          value: ( Object.values(this.state.catTotals)[1]/(this.state.totalSpent) )*100
+                        },
+                        {
+                          name: 'EatOut',
+                          color: '#3366cc',
+                          value: ( Object.values(this.state.catTotals)[2]/(this.state.totalSpent) )*100
+                        },
+                        {
+                          name: 'Bills',
+                          color: '#00b300',
+                          value: ( Object.values(this.state.catTotals)[3]/(this.state.totalSpent) )*100
+                        },
+                        {
+                          name: 'Entertainment',
+                          color: '#ff8c1a',
+                          value: ( Object.values(this.state.catTotals)[4]/(this.state.totalSpent) )*100
+                        }
+                      ]}
+                      />
+                    </div>
+                  </Tab>
+                </Tabs>
+              }
             </CardText>
           </Card>
         </MuiThemeProvider>
