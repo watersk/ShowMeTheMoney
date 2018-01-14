@@ -280,7 +280,7 @@ class App extends Component {
               { this.state.submittedValues.length===0 ? <div style={{ textAlign: 'center' }}>No Data to Show</div> : 
                 <Tabs>
                   <Tab label="Category">
-                    <div>
+                    <div style={{ marginLeft: '15%', marginTop: '20%', width: '65%' }}>
                       <PieChart slices={[
                         {
                           name: 'Grocery',
@@ -312,7 +312,7 @@ class App extends Component {
                     </div>
                   </Tab>
                   <Tab label="Amount By Category">
-                    <div>
+                    <div style={{ marginLeft: '15%', marginTop: '20%', width: '65%' }}>
                       <PieChart slices={[
                         {
                           name: 'Grocery',
