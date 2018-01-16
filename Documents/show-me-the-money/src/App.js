@@ -19,6 +19,7 @@ import {
 } from 'material-ui/Table';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
+import {List, ListItem} from 'material-ui/List';
 import logo from './logo.svg';
 import './App.css';
 
@@ -57,6 +58,9 @@ const styles = {
   },
   other: {
     marginLeft:20
+  },
+  displayList: {
+    initiallyOpen: SVGComponentTransferFunctionElement
   }
 };
 
@@ -344,6 +348,31 @@ class App extends Component {
                     </div>
                   </Tab>
                 </Tabs>
+              }
+              <br />
+              { this.state.submittedValues.length===0 ? <div /> :
+                <List style={{ marginLeft: '25%' }} >
+                  <ListItem style={styles.displayList} primaryText={ddlOptions[0].label} leftIcon={
+                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Grocery'] }} />
+                    }
+                  />
+                  <ListItem style={styles.displayList} primaryText={ddlOptions[1].label} leftIcon={
+                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Venmo'] }} />
+                    }
+                  />
+                  <ListItem style={styles.displayList} primaryText={ddlOptions[2].label} leftIcon={
+                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['EatOut'] }} />
+                    }
+                  />
+                  <ListItem style={styles.displayList} primaryText={ddlOptions[3].label} leftIcon={
+                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Bills'] }} />
+                    }
+                  />
+                  <ListItem style={styles.displayList} primaryText={ddlOptions[4].label} leftIcon={
+                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Entertainment'] }} />
+                    }
+                  />
+                </List>
               }
             </CardText>
           </Card>
