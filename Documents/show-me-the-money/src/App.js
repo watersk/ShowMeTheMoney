@@ -20,6 +20,8 @@ import {
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import {List, ListItem} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import ActionInfo from 'material-ui/svg-icons/action/info';
 import logo from './logo.svg';
 import './App.css';
 
@@ -37,7 +39,7 @@ const defaultOption = { value: '-Select-', label: '-Select-'};
 
 // array of objects for colors associated with the pie chart
 const pieColors = 
-  { Grocery: '#b300b3',
+  { Grocery: '#b300b3', 
     Venmo: '#e60000',
     EatOut: '#3366cc',
     Bills: '#00b300' ,
@@ -171,6 +173,7 @@ class App extends Component {
     this.handleFormChangeCategoryDDL = this.handleFormChangeCategoryDDL.bind(this);
     this.handleFormChangeAmount = this.handleFormChangeAmount.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.getChartData = this.getChartData.bind(this);
   }
 
   // Handling functions
@@ -228,6 +231,23 @@ class App extends Component {
     this.setState({ formValueAmount: e.target.value });
   }
 
+  getChartData(categoryType) {
+    switch(categoryType) {
+      case 'Grocery':
+        return(<div>GroceryStuff</div>);
+      case 'Venmo':
+        return(<div>VenmoStuff</div>);
+      case 'EatOut':
+        return(<div>EatOutStuff</div>);
+      case 'Bills':
+        return(<div>BillsStuff</div>);
+      case 'Entertainment':
+        return(<div>EntertainmentStuff</div>);
+      default:
+        return(<div />);
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -283,7 +303,7 @@ class App extends Component {
             <CardText expandable={true}>
               { this.state.submittedValues.length===0 ? <div style={{ textAlign: 'center' }}>No Data to Show</div> : 
                 <Tabs>
-                  <Tab label="Category">
+                  <Tab label="Category" style={{whiteSpace: 'normal'}}>
                     <div style={{ marginLeft: '15%', marginTop: '20%', width: '65%' }}>
                       <PieChart slices={[
                         {
@@ -315,7 +335,7 @@ class App extends Component {
                       />
                     </div>
                   </Tab>
-                  <Tab label="Amount By Category">
+                  <Tab label="Amount By Category" style={{whiteSpace: 'normal'}}>
                     <div style={{ marginLeft: '15%', marginTop: '20%', width: '65%' }}>
                       <PieChart slices={[
                         {
@@ -351,26 +371,41 @@ class App extends Component {
               }
               <br />
               { this.state.submittedValues.length===0 ? <div /> :
-                <List style={{ marginLeft: '25%' }} >
-                  <ListItem style={styles.displayList} primaryText={ddlOptions[0].label} leftIcon={
-                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Grocery'] }} />
+                <List style={{ marginLeft: '10%', marginRight: '10%' }} >
+                  <ListItem style={styles.displayList}
+                    primaryText={ddlOptions[0].label}
+                    leftIcon={
+                    < div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Grocery'] }} />
                     }
+                    onClick={this.getChartData("Grocery")}
                   />
-                  <ListItem style={styles.displayList} primaryText={ddlOptions[1].label} leftIcon={
-                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Venmo'] }} />
+                  <ListItem style={styles.displayList}
+                    primaryText={ddlOptions[1].label}
+                    leftIcon={
+                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Venmo'] }} />
                     }
+                    onClick={this.getChartData("Venmo")}
                   />
-                  <ListItem style={styles.displayList} primaryText={ddlOptions[2].label} leftIcon={
-                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['EatOut'] }} />
+                  <ListItem style={styles.displayList}
+                    primaryText={ddlOptions[2].label}
+                    leftIcon={
+                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['EatOut'] }} />
                     }
+                    onClick={this.getChartData("EatOut")}
                   />
-                  <ListItem style={styles.displayList} primaryText={ddlOptions[3].label} leftIcon={
-                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Bills'] }} />
+                  <ListItem style={styles.displayList}
+                    primaryText={ddlOptions[3].label}
+                    leftIcon={
+                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Bills'] }} />
                     }
+                    onClick={this.getChartData("Bills")}
                   />
-                  <ListItem style={styles.displayList} primaryText={ddlOptions[4].label} leftIcon={
-                    <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Entertainment'] }} />
+                  <ListItem style={styles.displayList}
+                    primaryText={ddlOptions[4].label}
+                    leftIcon={
+                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Entertainment'] }} />
                     }
+                    onClick={this.getChartData("Entertainment")}
                   />
                 </List>
               }
