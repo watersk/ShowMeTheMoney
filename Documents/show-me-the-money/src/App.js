@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-dropdown';
 import PieChart from 'react-simple-pie-chart';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -19,9 +19,8 @@ import {
 } from 'material-ui/Table';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
+import Popover from 'material-ui/Popover';
 import {List, ListItem} from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
-import ActionInfo from 'material-ui/svg-icons/action/info';
 import logo from './logo.svg';
 import './App.css';
 
@@ -33,9 +32,6 @@ const ddlOptions = [
   { value: 'Bills', label: 'Bills' },
   { value: 'Entertainment', label: 'Entertainment' }
 ];
-
-// default option to populate in Category DDL (can't be an actual selection)
-const defaultOption = { value: '-Select-', label: '-Select-'};
 
 // array of objects for colors associated with the pie chart
 const pieColors = 
@@ -165,7 +161,8 @@ class App extends Component {
         EatOut: 0,
         Bills: 0,
         Entertainment: 0
-      }
+      },
+      open: false,
     };
 
     // Bindings
@@ -173,7 +170,8 @@ class App extends Component {
     this.handleFormChangeCategoryDDL = this.handleFormChangeCategoryDDL.bind(this);
     this.handleFormChangeAmount = this.handleFormChangeAmount.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.getChartData = this.getChartData.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   // Handling functions
@@ -231,22 +229,19 @@ class App extends Component {
     this.setState({ formValueAmount: e.target.value });
   }
 
-  getChartData(categoryType) {
-    switch(categoryType) {
-      case 'Grocery':
-        return(<div>GroceryStuff</div>);
-      case 'Venmo':
-        return(<div>VenmoStuff</div>);
-      case 'EatOut':
-        return(<div>EatOutStuff</div>);
-      case 'Bills':
-        return(<div>BillsStuff</div>);
-      case 'Entertainment':
-        return(<div>EntertainmentStuff</div>);
-      default:
-        return(<div />);
-    }
-  };
+  handleClick(e) {
+    e.preventDefault();
+    this.setState({
+      open: true,
+      anchorEl: e.currentTarget,
+    });
+  }
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  }
 
   render() {
     return (
@@ -371,43 +366,61 @@ class App extends Component {
               }
               <br />
               { this.state.submittedValues.length===0 ? <div /> :
-                <List style={{ marginLeft: '10%', marginRight: '10%' }} >
-                  <ListItem style={styles.displayList}
-                    primaryText={ddlOptions[0].label}
-                    leftIcon={
-                    < div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Grocery'] }} />
-                    }
-                    onClick={this.getChartData("Grocery")}
-                  />
-                  <ListItem style={styles.displayList}
-                    primaryText={ddlOptions[1].label}
-                    leftIcon={
-                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Venmo'] }} />
-                    }
-                    onClick={this.getChartData("Venmo")}
-                  />
-                  <ListItem style={styles.displayList}
-                    primaryText={ddlOptions[2].label}
-                    leftIcon={
-                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['EatOut'] }} />
-                    }
-                    onClick={this.getChartData("EatOut")}
-                  />
-                  <ListItem style={styles.displayList}
-                    primaryText={ddlOptions[3].label}
-                    leftIcon={
-                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Bills'] }} />
-                    }
-                    onClick={this.getChartData("Bills")}
-                  />
-                  <ListItem style={styles.displayList}
-                    primaryText={ddlOptions[4].label}
-                    leftIcon={
-                      <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Entertainment'] }} />
-                    }
-                    onClick={this.getChartData("Entertainment")}
-                  />
-                </List>
+                  <div>
+                    <Menu style={{ marginLeft: '10%', marginRight: '10%' }} >
+                      <MenuItem value="Grocery"
+                        style={styles.displayList}
+                        primaryText={ddlOptions[0].label}
+                        leftIcon={
+                        < div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Grocery'] }} />
+                        }
+                        onClick={this.handleClick}
+                      />
+                      <MenuItem value="Venmo"
+                        style={styles.displayList}
+                        primaryText={ddlOptions[1].label}
+                        leftIcon={
+                          <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Venmo'] }} />
+                        }
+                        onClick={this.handleClick}
+                      />
+                      <MenuItem value="EatOut"
+                        style={styles.displayList}
+                        primaryText={ddlOptions[2].label}
+                        leftIcon={
+                          <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['EatOut'] }} />
+                        }
+                        onClick={this.handleClick}
+                      />
+                      <MenuItem value="Bills"
+                        style={styles.displayList}
+                        primaryText={ddlOptions[3].label}
+                        leftIcon={
+                          <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Bills'] }} />
+                        }
+                        onClick={this.handleClick}
+                      />
+                      <MenuItem value="Entertainment"
+                        style={styles.displayList}
+                        primaryText={ddlOptions[4].label}
+                        leftIcon={
+                          <div style={{ width: '15px', height: '15px', backgroundColor: pieColors['Entertainment'] }} />
+                        }
+                        onClick={this.handleClick}
+                      />
+                    </Menu>
+                    <Popover
+                    open={this.state.open}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                    >
+                      <List>
+                        <ListItem primaryText="Test stuff" />
+                      </List>
+                  </Popover>
+                </div>
               }
             </CardText>
           </Card>
